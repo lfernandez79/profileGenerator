@@ -1,0 +1,24 @@
+{
+  "name": "profileGenerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfernandez79/profileGenerator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lfernandez79/profileGenerator/issues"
+  },
+  "homepage": "https://github.com/lfernandez79/profileGenerator#readme",
+  "dependencies": {
+    "inquirer": "^7.0.4",
+    "util": "^0.12.1"
+  }
+}
