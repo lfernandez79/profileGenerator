@@ -5,8 +5,9 @@ const axios = require("axios");
 
 const writeFileAsync = util.promisify(fs.writeFile); 
 
+    userQuestions();
 
-const getInfo = async function userQuestions() {
+    function userQuestions() {
     
     return inquirer.prompt([
         {
@@ -29,20 +30,60 @@ const getInfo = async function userQuestions() {
             message: "What is the respository name?",
             name: "title"
         },
-    ])
-    
+
+        {
+            type: "input",
+            message: "Describe the project",
+            name: "description"
+        },
+        {
+            type: "input",
+            message: "Table of Contents",
+            name: "contents"
+        },
+        {
+            type: "input",
+            message: "Installation notes",
+            name: "install"
+        },
+        {
+            type: "input",
+            message: "How does the project work?",
+            name: "usage"
+        },
+        {
+            type: "input",
+            message: "Any licences on this project?",
+            name: "licence"
+        },
+        {
+            type: "input",
+            message: "Any other contributors to the project?",
+            name: "contributors"
+        },
+        {
+            type: "input",
+            message: "Any testing done to thios project",
+            name: "test"
+        },
+        {
+            type: "input",
+            message: "Comments relating to the project?",
+            name: "questions"
+        },
+        
+    ]);
+};
+    async function init(){
+
     try {
-        const { name, email, username, title } = await inquirer.prompt(questions);
-
-        let { data } = await axios.get(`https://api.github.com/users/${username}`)
-
+        const dataInput = await userQuestions();
+        let {data} = axios.get(`https://api.github.com/users/${username}`)
     } catch (err) {
         console.log(err);
     }
- };
+};
 
-console.log(getInfo);
+
 // https://api.github.com/users/lfernandez79
-
-
 
