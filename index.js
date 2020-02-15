@@ -5,8 +5,6 @@ const axios = require("axios");
 
 const writeFileAsync = util.promisify(fs.writeFile); 
 
-    userQuestions();
-
     function userQuestions() {
     
     return inquirer.prompt([
@@ -23,7 +21,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
         {
             type: "input",
             message: "What is your github username?",
-            name: "username"
+            name: "github"
         },
         {
             type: "input",
@@ -74,15 +72,49 @@ const writeFileAsync = util.promisify(fs.writeFile);
         
     ]);
 };
+
+function generateHTML(dataInput) {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="jumbotron">
+  <div class="container">
+    <h1 class="display-4">Hi! My name is ${dataInput.name}</h1>
+    <p class="lead">My email address is:  ${dataInput.email}.</p>
+    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+    <ul class="list-group">
+      <li class="list-group-item">My GitHub username is ${dataInput.github}</li>
+      <li class="list-group-item">Project: ${dataInput.description}</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>`;
+}
+
+
     async function init(){
 
     try {
         const dataInput = await userQuestions();
+        const html = generateHTML(dataInput);
+        await writeFileAsync("index.html", html);
+        console.log("Successfully  created index.html!");
+
         let {data} = axios.get(`https://api.github.com/users/${username}`)
     } catch (err) {
         console.log(err);
     }
-};
+}
+
+init();
 
 
 // https://api.github.com/users/lfernandez79
