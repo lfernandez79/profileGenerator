@@ -7,7 +7,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
     function userQuestions() {
     
-    return inquirer.prompt([
+         return inquirer.prompt([
         {
             type: "input",
             message: "What is your name?",
@@ -108,7 +108,23 @@ function generateHTML(dataInput) {
         await writeFileAsync("index.html", html);
         console.log("Successfully  created index.html!");
 
-        let {data} = axios.get(`https://api.github.com/users/${username}`)
+        let {data} = axios.get(`https://api.github.com/users/${dataInput.github}`)
+
+        await writeFileAsync("readme1.md", `
+        ## GitHub Username: ${dataInput.github}
+        ## Email: ${dataInput.email}
+        # Bio Image: ${dataInput.avatar_url}
+        # Repo Title: ${title}
+        ## Repo Description: ${description}
+        ## Table of Contents: ${tableOfContents}
+        ## Installation: ${installation}
+        ## Usage: ${usage}
+        ## License: ${license}
+        ## Contributions: ${contributions}
+        ## Tests: ${tests}
+        `)
+
+
     } catch (err) {
         console.log(err);
     }
