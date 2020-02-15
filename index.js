@@ -1,136 +1,55 @@
-const inquirer = require ("inquirer");
-const fs = require ("fs");
+const inquirer = require("inquirer");
+const fs = require("fs");
 const util = require("util");
-const axios = require("axios");
+const readMe = require("./utils/generateMarkdown");
+const api = require("./utils/api.js");
 
-const writeFileAsync = util.promisify(fs.writeFile); 
+const writeFileAsync = util.promisify(fs.writeFile);
 
-    function userQuestions() {
-    
-         return inquirer.prompt([
+function userQuestions() {
+    return inquirer.prompt([
         {
             type: "input",
-            message: "What is your name?",
-            name: "name"
+            name: "projectTitle",
+            message: "What is the title of your project?"
         },
         {
             type: "input",
-            message: "What is your email?",
-            name: "email"
+            name: "Description",
+            message: "Give a brief description of your project."
+        },
+        {
+            type: "list",
+            name: "License",
+            message: "What is the licensing of your project?",
+            choices: ["MIT", "GPL", "Apache License 2.0", "BSD"]
         },
         {
             type: "input",
-            message: "What is your github username?",
-            name: "github"
-        },
-        {
-            type: "input",
-            message: "What is the respository name?",
-            name: "title"
-        },
-
-        {
-            type: "input",
-            message: "Describe the project",
-            name: "description"
-        },
-        {
-            type: "input",
-            message: "Table of Contents",
-            name: "contents"
-        },
-        {
-            type: "input",
-            message: "Installation notes",
-            name: "install"
-        },
-        {
-            type: "input",
-            message: "How does the project work?",
-            name: "usage"
-        },
-        {
-            type: "input",
-            message: "Any licences on this project?",
-            name: "licence"
-        },
-        {
-            type: "input",
-            message: "Any other contributors to the project?",
-            name: "contributors"
-        },
-        {
-            type: "input",
-            message: "Any testing done to thios project",
-            name: "test"
-        },
-        {
-            type: "input",
-            message: "Comments relating to the project?",
-            name: "questions"
-        },
-        
+            name: "gitUsername",
+            message: "What is your Github username?"
+        }
     ]);
-};
-
-function generateHTML(dataInput) {
-    return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${dataInput.name}</h1>
-    <p class="lead">My email address is:  ${dataInput.email}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${dataInput.github}</li>
-      <li class="list-group-item">Project: ${dataInput.description}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
 }
 
+init();
 
-    async function init(){
-
+async function init() {
     try {
-        const dataInput = await userQuestions();
-        const html = generateHTML(dataInput);
-        await writeFileAsync("index.html", html);
-        console.log("Successfully  created index.html!");
+        var userAnswers = await userQuestions();
+        // console.log(userAnswers);
+        var response = await api.getUser(userAnswers.gitUsername);
+        // var totalStars = await api.getStars(userAnswers.gitUsername);
+        var data = { userAnswers, ...response.data };
+        console.log(data);
 
-        let {data} = axios.get(`https://api.github.com/users/${dataInput.github}`)
+        var userMD = await readMe(data);
 
-        await writeFileAsync("readme1.md", `
-        ## GitHub Username: ${dataInput.github}
-        ## Email: ${dataInput.email}
-        # Bio Image: ${dataInput.avatar_url}
-        # Repo Title: ${title}
-        ## Repo Description: ${description}
-        ## Table of Contents: ${tableOfContents}
-        ## Installation: ${installation}
-        ## Usage: ${usage}
-        ## License: ${license}
-        ## Contributions: ${contributions}
-        ## Tests: ${tests}
-        `)
-
-
+        await writeFileAsync("README.md", userMD, "utf8");
     } catch (err) {
         console.log(err);
     }
 }
-
-init();
 
 
 // https://api.github.com/users/lfernandez79

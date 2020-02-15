@@ -1,4 +1,4 @@
-function generateMarkdown(data) {
+function generateMarkdown(answers) {
   return `
 
 ## Project Title
