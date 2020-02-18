@@ -1,17 +1,16 @@
 
 
 ## Project Title
-undefined
+Travel Advisor
+
 ## Project Description
-undefined
+Provide airport information, currency exchange and local time anywhere in the world!
 
 ## Table of Contents:
 [Installation](#installation)
 [Usage](#usage)
 [Credits](#credits)
 [License](#license)
-
-## Installation
 
 ## Usage
 [Provide instructions and examples to use.]
@@ -20,16 +19,17 @@ undefined
 [List your collaborators.]
 
 ## License
-undefined
+MIT
 
 ## Badges
-undefined
+[![star this repo](https://githubbadges.com/star.svg?user=lfernandez79&repo=project1&style=default)](https://github.com/lfernandez79/project1)
+[![fork this repo](https://githubbadges.com/fork.svg?user=lfernandez79&repo=project1&style=default)](https://github.com/lfernandez79/project1/fork)
 
 ## GitHub Email
-null
+lfernandez79@gmail.com
 
 ## GitHub Username
-undefined
+lfernandez79
 
 ## Avatar URL
 ![avatarurl](https://avatars0.githubusercontent.com/u/20566044?v=4)

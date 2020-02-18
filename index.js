@@ -21,13 +21,18 @@ function userQuestions() {
         {
             type: "list",
             name: "License",
-            message: "What is the licensing of your project?",
-            choices: ["MIT", "GPL", "Apache License 2.0", "BSD"]
+            message: "Choose a license?",
+            choices: ["MIT", "GPL", "BSD"]
         },
         {
             type: "input",
             name: "gitUsername",
             message: "What is your Github username?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is your email?"
         }
     ]);
 }
@@ -37,9 +42,9 @@ init();
 async function init() {
     try {
         var userAnswers = await userQuestions();
-        // console.log(userAnswers);
+        console.log(userAnswers);
         var response = await api.getUser(userAnswers.gitUsername);
-        // var totalStars = await api.getStars(userAnswers.gitUsername);
+        
         var data = { userAnswers, ...response.data };
         console.log(data);
 

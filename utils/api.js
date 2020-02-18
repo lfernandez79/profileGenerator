@@ -1,9 +1,13 @@
 const axios = require("axios");
+
+
 // require("dotenv").config();
 
+
+// GRAB USER INFORMATION
 const api = {
-  getUser(username) {
-// GRAB USER INFROMATION
+    getUser(username) {
+
     const queryUrl = `https://api.github.com/users/${username}`;
     console.log(queryUrl);
     return axios.get(queryUrl).catch(err => {
@@ -11,6 +15,7 @@ const api = {
       process.exit(1);
     });
   },
+
 };
 
 module.exports = api;

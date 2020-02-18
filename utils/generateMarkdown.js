@@ -2,17 +2,16 @@ function generateMarkdown(answers) {
   return `
 
 ## Project Title
-${answers.projectTitle}
+${answers.userAnswers.projectTitle}
+
 ## Project Description
-${answers.Description}
+${answers.userAnswers.Description}
 
 ## Table of Contents:
 [Installation](#installation)
 [Usage](#usage)
 [Credits](#credits)
 [License](#license)
-
-## Installation
 
 ## Usage
 [Provide instructions and examples to use.]
@@ -21,16 +20,17 @@ ${answers.Description}
 [List your collaborators.]
 
 ## License
-${answers.License}
+${answers.userAnswers.License}
 
 ## Badges
-${answers.totalStars}
+[![star this repo](https://githubbadges.com/star.svg?user=lfernandez79&repo=project1&style=default)](https://github.com/lfernandez79/project1)
+[![fork this repo](https://githubbadges.com/fork.svg?user=lfernandez79&repo=project1&style=default)](https://github.com/lfernandez79/project1/fork)
 
 ## GitHub Email
-${answers.email}
+${answers.userAnswers.email}
 
 ## GitHub Username
-${answers.gitUsername}
+${answers.login}
 
 ## Avatar URL
 ![avatarurl](${answers.avatar_url})
